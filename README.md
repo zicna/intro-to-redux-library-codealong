@@ -36,6 +36,7 @@ will allow a user to view an existing shopping list.
 First things first, we'll use Redux to initialize our store and pass it down to
 our top-level container component.
 
+
 Redux provides a function, `createStore()`, that, when invoked, returns an
 instance of the Redux store for us. So we can use that method to create a store.
 We want to import `createStore()` in our `src/index.js` file, where ReactDOM
@@ -58,6 +59,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
 
 Notice that we are importing the `createStore` function from Redux. Just like we
 did previously, we call our __createStore()__ method in `src/index.js`.  We pass
