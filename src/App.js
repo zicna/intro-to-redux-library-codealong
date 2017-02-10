@@ -3,17 +3,17 @@ import './App.css';
 
 class App extends Component {
 
-  handleOnClick() {
+  handleOnClick = event => {
     this.props.store.dispatch({
       type: 'INCREASE_COUNT',
-    });
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <button onClick={(event) => this.handleOnClick(event)} >
-          Click 
+        <button onClick={this.handleOnClick} >
+          Click
         </button>
         <p>{this.props.store.getState().items.length}</p>
       </div>
