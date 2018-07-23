@@ -36,7 +36,6 @@ will allow a user to view an existing shopping list.
 First things first, we'll use Redux to initialize our store and pass it down to
 our top-level container component.
 
-
 Redux provides a function, `createStore()`, that, when invoked, returns an
 instance of the Redux store for us. So we can use that method to create a store.
 We want to import `createStore()` in our `src/index.js` file, where ReactDOM
@@ -59,7 +58,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-
 
 Notice that we are importing the `createStore` function from Redux. Just like we
 did previously, we call our __createStore()__ method in `src/index.js`.  We pass
@@ -98,6 +96,7 @@ This `store` value is then passed in as a prop to `App`.
 
 We can try to see changes in our state if we add the following code. (It won't
 work, but let's give it a shot - A for effort I always say.)
+
 
 ```javascript
 // ./src/App.js
@@ -138,7 +137,7 @@ section.
 
 #### Add Logging to Our Reducer
 
-Ok, so getting our application to re-render takes a bit of work, and were going
+Getting our application to re-render takes a bit of work, and were going
 to leave it for the next section. In the meantime, let's get some feedback.
 First, let's log our action and the new state. So we'll change the reducer to
 the following:
@@ -200,6 +199,7 @@ to the following:
 ```javascript
 // ./src/index.js
 
+<<<<<<< HEAD
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
