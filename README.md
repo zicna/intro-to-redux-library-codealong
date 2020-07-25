@@ -6,9 +6,9 @@
 
 ## Introduction
 
-In the previous section, we have been building using a **createStore()** method
-that we wrote, and passing a reducer to it. We have been using the **dispatch**
-method from the store, to dispatch actions and update the state.
+In the previous section, we used a **createStore()** method that we wrote, 
+and passed a reducer to it. We used the **dispatch** method from the store 
+to dispatch actions and update the state.
 
 Now let's think about which part of our application would belong in the official
 Redux library -- that is, which part of our codebase would be common to all
@@ -16,7 +16,7 @@ applications. Well, probably not the reducer as our reducers seem unique to each
 React & Redux application. The reducers are unique because sometimes we have
 reducers that would add or remove items, or add or remove users, or edit users,
 etc. What these actions are and how the reducer manages the state is customized.
-Thus, the reducer would not be part of the redux library that other developers
+Thus, the reducer would not be part of the Redux library that other developers
 would use to build their application.
 
 The **createStore()**, method however is generic across Redux applications. It
@@ -25,9 +25,10 @@ getState method.
 
 So from now on, we will import our **createStore()** method from the official
 Redux library. Normally, to install Redux into a React application, you need to
-install two packages, `redux` and `react-redux` by running `npm install redux && npm install react-redux`. These are already included in this lesson's
-`package.json` file, so all you need to do is run `npm install && npm start` to
-get started.
+install two packages, `redux` and `react-redux`, by running 
+`npm install redux && npm install react-redux`. These are already included in 
+this lesson's `package.json` file, so all you need to do is run 
+`npm install && npm start` to get started.
 
 In this code along, we'll be building a simple shopping list application that
 will allow a user to view an existing shopping list.
@@ -38,9 +39,9 @@ First things first, we'll use Redux to initialize our store and pass it down to
 our top-level container component.
 
 Redux provides a function, `createStore()`, that, when invoked, returns an
-instance of the Redux store for us. So we can use that method to create a store.
-We want to import `createStore()` in our `src/index.js` file, where ReactDOM
-renders our application.
+instance of the Redux store for us. We want to import `createStore()` in our 
+`src/index.js` file, where ReactDOM renders our application, and then use
+that function to create the store.
 
 ```javascript
 // ./src/index.js
@@ -64,8 +65,8 @@ to access the **Redux** store.
 However, reducing the need for passing props is part of why **Redux** works well
 with React. To avoid passing `store` as a prop, we use the `Provider` component,
 which is imported from `react-redux`. The `Provider` component wraps the top
-level component, App, in this case, and is the only component where `store` is
-passed in:
+level component -- App, in this case -- and is the only component where `store` 
+is passed in:
 
 ```javascript
 // ./src/index.js
@@ -125,7 +126,7 @@ to the list each time it is called, and that item is one more than the last
 item.
 
 Instead of having all of our functions encapsulated in a closure within
-`index.js` as we did while building our own redux set up, we've now separated
+`index.js` as we did while building our own Redux set up, we've now separated
 out the reducer function, giving it a relevant name, `shoppingListItemReducer`,
 and let the Redux library take care of our `createStore` function. These two
 pieces are both imported into `src/index.js` and used to create `store`.
@@ -194,6 +195,12 @@ action. Every button click dispatches an action to our store, causing it to
 change. Since data (`items`) from that store is being accessed in App, App will
 re-render and display the updated counter.
 
+<!-- Once we've implemented the code above for `index.js` and `App.js`, we can see 
+**Redux** in action. If you boot up the app, you should see a button on the page, 
+followed by a zero. Every button click dispatches an action to our store, causing 
+it to change. Since data (`items`) from that store is being accessed in App, App 
+will re-render and display the updated counter. -->
+
 #### Add Logging to Our Reducer
 
 Ok, so getting our application to re-render takes a bit of work, and were going
@@ -256,6 +263,13 @@ Chrome (press command+shift+c to pull it up), and then at the top bar you will
 see a couple of arrows. Click those arrows, and if you see Redux as your
 dropdown, you properly installed the Chrome extension. Step one is done.
 
+<!-- First, just Google for Redux Devtools Chrome. There you will find the Chrome
+extension for Redux. Please download it, and refresh Chrome. To verify that you
+have successfully installed the extension, go to your developer console in Google
+Chrome (press command+shift+c to pull it up). In the top bar you will see a couple 
+of arrows. Click those arrows, and if you see Redux in the dropdown, you have 
+properly installed the Chrome extension. Step one is done. -->
+
 Second, we need to tell our application to communicate with this extension.
 Doing so is pretty easy. Now we change the arguments to our createStore method
 to the following:
@@ -295,6 +309,16 @@ communicating with the devtool. Click on the button in your application, to see
 if the state changes. Now for each time you click on it, you should see an
 action in the devtools that has the name of that action. If you are looking at
 the last state, you should see the changes in our state.
+
+<!-- Ok, notice that we are still passing through our reducer to the createStore
+method. The second argument is accessing our browser to find a method called
+`__REDUX_DEVTOOLS_EXTENSION__`. Now let's open the Redux Devtools (press 
+command+shift+c, click on the arrows at the top right, and select the extension 
+in the dropdown). Now click on the tab that says state. You should see 
+`{ items: [] }`. If you do, it means that your app is now communicating with 
+the devtool. Click on the button in your application, to see if the state 
+changes. For each time you click on it, you should see the action name 
+(`INCREASE_COUNT`) and the updated state show up in the devtools. -->
 
 Whew!
 
