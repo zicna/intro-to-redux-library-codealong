@@ -2,7 +2,7 @@
 
 ## Objectives
 
-- Use the `createStore()` method provided by the redux library.
+- Use the `createStore()` method provided by the Redux library.
 
 ## Introduction
 
@@ -58,8 +58,8 @@ const store = createStore(shoppingListItemReducer); /* code change */
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Now, with the above set up, let's pass `store` down to App as a prop so we 
-can then access the **Redux** store.
+Now, with the above set up, let's pass `store` down to App as a prop so it 
+can access the **Redux** store.
 
 ```javascript
 // ./src/index.js
@@ -108,8 +108,8 @@ export default function shoppingListItemReducer(
 ```
 
 Ok so effectively, our reducer is just producing a counter. It adds a new "item"
-to the list each time it is called; for this example the item is simply a number
-that is one more than the last item.
+to the list each time it is called; for this example each item is simply a number
+that is one more than the previous item.
 
 Instead of having all of our functions encapsulated in a closure within
 `index.js` as we did while building our own Redux set up, we've now separated
@@ -153,17 +153,19 @@ we can display it on the page. We also have an event handler that calls the
 
 Now, with this code in place, if you boot up the app you should see a button 
 on the page, followed by a zero. Then, if you click on the button... nothing 
-happens. So what's gone wrong here? Well, we haven't yet done all the work 
-necessary to get our **React** and **Redux** libraries communicating with 
-each other properly so the page re-renders when the state is updated. We'll 
-tackle that in the next lesson. But is our state getting updated? Let's get 
-some feedback so we can find out.
+happens. So what's gone wrong here? Well, we've done the work necessary to
+create the store and made it accessible to our app so the state is updated
+when we click the button, but we haven't yet done all the work necessary to 
+get our **React** and **Redux** libraries communicating with each other 
+properly so the page re-renders once the state is updated. We'll tackle that 
+in the next lesson. In the meantime, how do we know our state getting updated? 
+Let's get some feedback so we can find out.
 
 
 #### Add Logging to Our Reducer
 
-First, let's log our action and the new state. So we'll change the reducer to 
-the following:
+First, let's log our action and the new state. So we'll change the reducer as 
+follows:
 
 ```javascript
 // ./src/reducers/shoppingListItemReducer
@@ -193,22 +195,24 @@ export default function shoppingListItemReducer(
 
 Ok, so this may look like a lot, but really all we're doing is adding some
 logging behavior. At the top of the function, we are logging the action. After
-the case statement, we are storing our state as current state first. Then we are
-logging the updating state value. Then under the default case statement, we
-just can log the previous state because this state is unchanged.
+the case statement, we are logging our current state first, followed by the 
+value the state is being updated to. Under the default case statement, we
+can just log the previous state because this state will be unchanged.
 
-Now, refresh your app, and give it a shot. You should see the correct action
-being dispatched, as well as an update to the state. While we aren't getting our
-state directly from the store and showing that in our console.log, we know that 
-we are dispatching actions. We know this because each time we click a button, we 
-call this.props.store.dispatch({ type: 'INCREASE_COUNT' }) and somehow this is 
-hitting our reducer. So things are happening.
+Now, refresh your app, and give it a shot. When the page loads, you should see 
+the initial action being logged, along with the initial number of items, 0. 
+This is coming from our default case. Then, when you click the button, you 
+should see the `INCREASE_COUNT` action logged along with the current state and 
+the state we are updating to. We know that we are dispatching actions because 
+each time we click the button, we can see that the call to 
+this.props.store.dispatch({ type: 'INCREASE_COUNT' }) is hitting our reducer, 
+and we can also see the length of the current state increasing each time. So 
+things are happening.
 
 #### Redux DevTools
-
 There is this amazing piece of software that allows us to nicely view the state
-of our store and each action that is dispatched. (Incidentally, the software can 
-do a lot more for us than that. I'll let you read about it here:
+of our store and each action that is dispatched. (In actuality, the software can 
+do a lot more for us than that; you can read up on it here:
 [redux-devtools-extension][devtools].) Ok, so let's get to incorporating the 
 devtools. In fact, every time we use the Redux library going forward, we should 
 make sure we incorporate devtools. Otherwise, you are flying blind.
@@ -249,11 +253,12 @@ Ok, notice that we are still passing through our reducer to the createStore
 method. The second argument is accessing our browser to find a method called
 `__REDUX_DEVTOOLS_EXTENSION__`. Now let's open the Redux Devtools (press 
 command+shift+c, click on the arrows at the top right, and select the extension 
-in the dropdown). Now click on the tab that says state. You should see 
-`{ items: [] }`. If you do, it means that your app is now communicating with 
-the devtool. Click on the button in your application, to see if the state 
-changes. For each time you click on it, you should see the action name 
-(`INCREASE_COUNT`) and the updated state show up in the devtools.
+in the dropdown). You should see the initial action, `@@INIT` in the inspector. 
+Now click on the tab that says state. You should see `{ items: [] }`. If you do, 
+it means that your app is now communicating with the devtool. Click on the button 
+in your application, to see if the state changes. For each time you click on it, 
+you should see the action name (`INCREASE_COUNT`) and the updated state show up 
+in the devtools.
 
 Whew!
 
@@ -262,10 +267,10 @@ Whew!
 In this lesson, we saw how to use the **createStore()** method. We saw that we
 can rely on the Redux library to provide this method, and that we still need to
 write our own reducer to tell the store what the new state should be given a
-particular action. We saw that when using the **createStore()** method, and
+particular action. We saw that when using the **createStore()** method and
 passing through a reducer, we are able to change the state just as we did
-previously. We were able to see these changes by hooking our application up to a
-Chrome extension called Redux Devtools, and then providing the correct
+previously. We were able to see these changes by hooking our application up to 
+a Chrome extension called Redux Devtools, and then providing the correct
 configuration.
 
 [devtools]: https://github.com/zalmoxisus/redux-devtools-extension
