@@ -30,8 +30,8 @@ install two packages, `redux` and `react-redux`, by running
 this lesson's `package.json` file, so all you need to do is run 
 `npm install && npm start` to get started.
 
-In this code along, we'll be building a simple shopping list application that
-will allow a user to view an existing shopping list.
+In this code along, we'll be building a simple counter application that 
+displays the value of the counter along with a button to increment it.
 
 ### Step 1: Setting Up The Store
 
@@ -49,11 +49,11 @@ that function to create the store.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux'; /* code change */
-import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
+import counterReducer from './reducers/counterReducer.js';
 import App from './App';
 import './index.css';
 
-const store = createStore(shoppingListItemReducer); /* code change */
+const store = createStore(counterReducer); /* code change */
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
@@ -67,11 +67,11 @@ can access the **Redux** store.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
+import counterReducer from './reducers/counterReducer.js';
 import App from './App';
 import './index.css';
 
-const store = createStore(shoppingListItemReducer);
+const store = createStore(counterReducer);
 
 
 ReactDOM.render(
@@ -83,37 +83,34 @@ ReactDOM.render(
 So, to recap, just like we did previously, we call our **createStore()** method
 in `src/index.js`. We pass our **createStore()** method a reducer, and then we
 pass our newly created store to our **App** component as a prop. You can find
-the reducer in `./src/reducers/shoppingListItemReducer.js`:
+the reducer in `./src/reducers/counterReducer.js`:
 
 ```javascript
-// ./src/reducers/shoppingListItemReducer.js
+// ./src/reducers/counterReducer.js
 
-export default function shoppingListItemReducer(
-  state = {
-    items: []
-  },
-  action
+export default function counterReducer(
+	state = {
+		clicks: 0
+	},
+	action
 ) {
-  switch (action.type) {
-    case 'INCREASE_COUNT':
-      return {
-        ...state,
-        items: state.items.concat(state.items.length + 1)
-      }
-
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case 'INCREASE_COUNT':
+			return {
+				clicks: state.clicks + 1
+			}
+		default:
+			return state;
+	}
 }
 ```
 
-Ok so effectively, our reducer is just producing a counter. It adds a new "item"
-to the list each time it is called; for this example each item is simply a number
-that is one more than the previous item.
+Each time an action with type 'INCREASE_COUNT' is dispatched to the reducer, 
+the value of the counter is incremented.
 
 Instead of having all of our functions encapsulated in a closure within
 `index.js` as we did while building our own Redux set up, we've now separated
-out the reducer function, giving it a relevant name, `shoppingListItemReducer`,
+out the reducer function, giving it a relevant name, `counterReducer`,
 and let the Redux library take care of our `createStore` function. These two
 pieces are both imported into `src/index.js` and used to create `store`.
 
@@ -137,7 +134,7 @@ class App extends Component {
 		return (
 			<div className="App">
 				<button onClick={this.handleOnClick}>Click</button>
-				<p>{state.items.length}</p>
+				<p>{state.clicks}</p>
 			</div>
 		);
 	}
@@ -168,26 +165,25 @@ First, let's log our action and the new state. So we'll change the reducer as
 follows:
 
 ```javascript
-// ./src/reducers/shoppingListItemReducer
+// ./src/reducers/counterReducer
 
-export default function shoppingListItemReducer(
+export default function counterReducer(
   state = {
-    items: []
+    clicks: 0
   },
   action
 ) {
   console.log(action);
   switch (action.type) {
     case 'INCREASE_COUNT':
-      console.log('Current state.items length %s', state.items.length);
-      console.log('Updating state.items length to %s', state.items.length + 1);
+      console.log('Current state.clicks %s', state.clicks);
+      console.log('Updating state.clicks to %s', state.clicks + 1);
       return {
-        ...state,
-        items: state.items.concat(state.items.length + 1)
+        clicks: state.clicks + 1
       };
 
     default:
-      console.log('Initial state.items length: %s', state.items.length);
+      console.log('Initial state.clicks: %s', state.clicks);
       return state;
   }
 }
@@ -200,13 +196,13 @@ value the state is being updated to. Under the default case statement, we
 can just log the previous state because this state will be unchanged.
 
 Now, refresh your app, and give it a shot. When the page loads, you should see 
-the initial action being logged, along with the initial number of items, 0. 
+the initial action being logged, along with the initial value of the counter, 0. 
 This is coming from our default case. Then, when you click the button, you 
 should see the `INCREASE_COUNT` action logged along with the current state and 
 the state we are updating to. We know that we are dispatching actions because 
 each time we click the button, we can see that the call to 
-this.props.store.dispatch({ type: 'INCREASE_COUNT' }) is hitting our reducer, 
-and we can also see the length of the current state increasing each time. So 
+`this.props.store.dispatch({ type: 'INCREASE_COUNT' })` is hitting our reducer, 
+and we can also see the value of the current state increasing each time. So 
 things are happening.
 
 #### Redux DevTools
@@ -234,12 +230,12 @@ to the following:
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import shoppingListItemReducer from './reducers/shoppingListItemReducer';
+import counterReducer from './reducers/counterReducer';
 import App from './App';
 import './index.css';
 
 const store = createStore(
-  shoppingListItemReducer,
+  counterReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ); /* code change */
 
@@ -254,7 +250,7 @@ method. The second argument is accessing our browser to find a method called
 `__REDUX_DEVTOOLS_EXTENSION__`. Now let's open the Redux Devtools (press 
 command+shift+c, click on the arrows at the top right, and select the extension 
 in the dropdown). You should see the initial action, `@@INIT` in the inspector. 
-Now click on the tab that says state. You should see `{ items: [] }`. If you do, 
+Now click on the tab that says state. You should see `{ clicks: 0 }`. If you do, 
 it means that your app is now communicating with the devtool. Each time you click 
 on the button in your application, you should see the action name 
 (`INCREASE_COUNT`) and the updated state show up in the devtools.
