@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
+import counterReducer from './reducers/counterReducer.js';
 import App from './App';
 import './index.css';
 
