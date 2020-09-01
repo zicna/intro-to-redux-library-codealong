@@ -158,8 +158,8 @@ create the store and made it accessible to our app so the state is updated
 when we click the button, but we haven't yet done all the work necessary to 
 get our **React** and **Redux** libraries communicating with each other 
 properly so the page re-renders once the state is updated. We'll tackle that 
-in the next lesson. In the meantime, how do we know our state getting updated? 
-Let's get some feedback so we can find out.
+in the next lesson. In the meantime, how do we know our is state getting 
+updated? Let's get some feedback so we can find out.
 
 
 #### Add Logging to Our Reducer
@@ -255,10 +255,9 @@ method. The second argument is accessing our browser to find a method called
 command+shift+c, click on the arrows at the top right, and select the extension 
 in the dropdown). You should see the initial action, `@@INIT` in the inspector. 
 Now click on the tab that says state. You should see `{ items: [] }`. If you do, 
-it means that your app is now communicating with the devtool. Click on the button 
-in your application, to see if the state changes. For each time you click on it, 
-you should see the action name (`INCREASE_COUNT`) and the updated state show up 
-in the devtools.
+it means that your app is now communicating with the devtool. Each time you click 
+on the button in your application, you should see the action name 
+(`INCREASE_COUNT`) and the updated state show up in the devtools.
 
 Whew!
 
