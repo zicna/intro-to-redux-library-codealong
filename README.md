@@ -154,7 +154,7 @@ create the store and made it accessible to our app so the state is updated
 when we click the button, but we haven't yet done all the work necessary to 
 get our **React** and **Redux** libraries communicating with each other 
 properly so the page re-renders once the state is updated. We'll tackle that 
-in the next lesson. In the meantime, how do we know our is state getting 
+in the next lesson. In the meantime, how do we know our state is getting 
 updated? Let's get some feedback so we can find out.
 
 
