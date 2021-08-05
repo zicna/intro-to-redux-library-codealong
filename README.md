@@ -42,19 +42,19 @@ instance of the Redux store for us. So we can use that method to create a store.
 We want to import `createStore()` in our `src/index.js` file, where ReactDOM
 renders our application.
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux'; /* code change */
-import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux"; /* code change */
+import shoppingListItemReducer from "./reducers/shoppingListItemReducer.js";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(shoppingListItemReducer); /* code change */
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 Notice that we are importing the `createStore` function from Redux. Now, with
@@ -67,16 +67,16 @@ which is imported from `react-redux`. The `Provider` component wraps the top
 level component, App, in this case, and is the only component where `store` is
 passed in:
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux'; /* code change */
-import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux"; /* code change */
+import shoppingListItemReducer from "./reducers/shoppingListItemReducer.js";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(shoppingListItemReducer);
 
@@ -85,7 +85,7 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider> /* code change */,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 ```
 
@@ -98,21 +98,21 @@ in `src/index.js`. We pass our **createStore()** method a reducer, and then we
 pass our newly created store to our **App** component as a prop. You can find
 the reducer in `./src/reducers/shoppingListItemReducer.js`:
 
-```javascript
+```jsx
 // ./src/reducers/shoppingListItemReducer.js
 
 export default function shoppingListItemReducer(
   state = {
-    items: []
+    items: [],
   },
   action
 ) {
   switch (action.type) {
-    case 'INCREASE_COUNT':
+    case "INCREASE_COUNT":
       return {
         ...state,
-        items: state.items.concat(state.items.length + 1)
-      }
+        items: state.items.concat(state.items.length + 1),
+      };
 
     default:
       return state;
@@ -139,15 +139,15 @@ store and map them to a component's props. Similarly, we can _also_ take
 actions, and by wrapping them in a dispatch and an anonymous function, be able
 pass them as props as well:
 
-```javascript
+```jsx
 // ./src/App.js
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import "./App.css";
 
 class App extends Component {
-  handleOnClick = event => {
+  handleOnClick = (event) => {
     this.props.increaseCount();
   };
 
@@ -161,22 +161,19 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    items: state.items
+    items: state.items,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    increaseCount: () => dispatch({ type: 'INCREASE_COUNT' })
+    increaseCount: () => dispatch({ type: "INCREASE_COUNT" }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 ```
 
 Ok, so this code places a button on the page with an `onClick` event listener
@@ -201,27 +198,27 @@ to go into greater depth in the next sections. In the meantime, let's get some
 feedback. First, let's log our action and the new state. So we'll change the
 reducer to the following:
 
-```javascript
+```jsx
 // ./src/reducers/shoppingListItemReducer
 
 export default function shoppingListItemReducer(
   state = {
-    items: []
+    items: [],
   },
   action
 ) {
   console.log(action);
   switch (action.type) {
-    case 'INCREASE_COUNT':
-      console.log('Current state.items length %s', state.items.length);
-      console.log('Updating state.items length to %s', state.items.length + 1);
+    case "INCREASE_COUNT":
+      console.log("Current state.items length %s", state.items.length);
+      console.log("Updating state.items length to %s", state.items.length + 1);
       return {
         ...state,
-        items: state.items.concat(state.items.length + 1)
+        items: state.items.concat(state.items.length + 1),
       };
 
     default:
-      console.log('Initial state.items length: %s', state.items.length);
+      console.log("Initial state.items length: %s", state.items.length);
       return state;
   }
 }
@@ -260,16 +257,16 @@ Second, we need to tell our application to communicate with this extension.
 Doing so is pretty easy. Now we change the arguments to our createStore method
 to the following:
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import shoppingListItemReducer from './reducers/shoppingListItemReducer';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import shoppingListItemReducer from "./reducers/shoppingListItemReducer";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(
   shoppingListItemReducer,
@@ -280,7 +277,7 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 ```
 
