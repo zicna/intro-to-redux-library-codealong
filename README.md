@@ -43,40 +43,40 @@ instance of the Redux store for us. We want to import `createStore()` in our
 `src/index.js` file, where ReactDOM renders our application, and then use
 that function to create the store.
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux'; /* code change */
-import counterReducer from './reducers/counterReducer.js';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux"; /* code change */
+import counterReducer from "./reducers/counterReducer.js";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(counterReducer); /* code change */
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 Now, with the above set up, let's pass `store` down to App as a prop so it 
 can access the **Redux** store.
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import counterReducer from './reducers/counterReducer.js';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import counterReducer from "./reducers/counterReducer.js";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(counterReducer);
 
 
 ReactDOM.render(
     <App store={store} />  /* code change */,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 ```
 
@@ -85,7 +85,7 @@ in `src/index.js`. We pass our **createStore()** method a reducer, and then we
 pass our newly created store to our **App** component as a prop. You can find
 the reducer in `./src/reducers/counterReducer.js`:
 
-```javascript
+```jsx
 // ./src/reducers/counterReducer.js
 
 export default function counterReducer(
@@ -95,7 +95,7 @@ export default function counterReducer(
 	action
 ) {
 	switch (action.type) {
-		case 'INCREASE_COUNT':
+		case "INCREASE_COUNT":
 			return {
 				clicks: state.clicks + 1
 			}
@@ -109,7 +109,7 @@ Each time an action with type 'INCREASE_COUNT' is dispatched to the reducer,
 the value of the counter is incremented.
 
 Instead of having all of our functions encapsulated in a closure within
-`index.js` as we did while building our own Redux set up, we've now separated
+`index.js` as we did while building our own Redux setup, we've now separated
 out the reducer function, giving it a relevant name, `counterReducer`,
 and let the Redux library take care of our `createStore` function. These two
 pieces are both imported into `src/index.js` and used to create `store`.
@@ -117,10 +117,11 @@ pieces are both imported into `src/index.js` and used to create `store`.
 Once we've created the store and passed it to the `App` component as a prop, 
 we can access it using `this.props.store`:
 
-```javascript
+```jsx
 // ./src/App.js
-import React, { Component } from 'react';
-import './App.css';
+
+import React, { Component } from "react";
+import "./App.css";
 
 class App extends Component {
 	handleOnClick = () => {
@@ -163,7 +164,7 @@ updated? Let's get some feedback so we can find out.
 First, let's log our action and the new state. So we'll change the reducer as 
 follows:
 
-```javascript
+```jsx
 // ./src/reducers/counterReducer
 
 export default function counterReducer(
@@ -174,15 +175,15 @@ export default function counterReducer(
 ) {
   console.log(action);
   switch (action.type) {
-    case 'INCREASE_COUNT':
-      console.log('Current state.clicks %s', state.clicks);
-      console.log('Updating state.clicks to %s', state.clicks + 1);
+    case "INCREASE_COUNT":
+      console.log("Current state.clicks %s", state.clicks);
+      console.log("Updating state.clicks to %s", state.clicks + 1);
       return {
         clicks: state.clicks + 1
       };
 
     default:
-      console.log('Initial state.clicks: %s', state.clicks);
+      console.log("Initial state.clicks: %s", state.clicks);
       return state;
   }
 }
@@ -223,15 +224,15 @@ Second, we need to tell our application to communicate with this extension.
 Doing so is pretty easy. Let's change the arguments to our createStore method
 to the following:
 
-```javascript
+```jsx
 // ./src/index.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import counterReducer from './reducers/counterReducer';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import counterReducer from "./reducers/counterReducer";
+import App from "./App";
+import "./index.css";
 
 const store = createStore(
   counterReducer,
@@ -240,7 +241,7 @@ const store = createStore(
 
 ReactDOM.render(
   <App store={store} />,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 ```
 
